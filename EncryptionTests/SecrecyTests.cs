@@ -1,6 +1,5 @@
 ﻿using Encryption.Exceptions;
 using Encryption.Models;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using NUnit.Framework;
 
 namespace EncryptionTests
@@ -8,8 +7,8 @@ namespace EncryptionTests
     [TestFixture]
     public class SecrecyTests
     {
-        [TestCase("alma","aaaa","alma")]
-        [TestCase("abcd","bbbb","bcde")]
+        [TestCase("alma", "aaaa", "alma")]
+        [TestCase("abcd", "bbbb", "bcde")]
         [TestCase("helloworld", "abcdefgijkl", "hfnosauzun")]
 
         public void EncryptingTest(string message, string key, string expectedResult)

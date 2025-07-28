@@ -1,5 +1,6 @@
 ﻿using Encryption.Exceptions;
 using Encryption.Models;
+using Microsoft.Win32.SafeHandles;
 
 namespace Encryption
 {
@@ -7,10 +8,11 @@ namespace Encryption
     {
         static void Main(string[] args)
         {
+            Secrecy secrecy = new Secrecy();
+            Overlap overlap = new Overlap();
+
             try
             {
-                Secrecy secrecy = new Secrecy();
-
                 Console.Write("Üzenet: ");
                 string message = Console.ReadLine();
                 int length = message.Length;
@@ -30,7 +32,6 @@ namespace Encryption
             {
                 Console.WriteLine(ex.Message);
             }
-            
         }
     }
 }
