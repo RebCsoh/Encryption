@@ -18,5 +18,24 @@
             }
             return GeneratedKey;
         }
+
+        //titkosított üzenet
+        public string Encrypting(string message, string key)
+        {
+            string encrypted = string.Empty;
+            int tmp = 0;
+
+            for (int i = 0; i < message.Length;i++)
+            {
+                tmp = CharToNumber(message[i]) + CharToNumber(key[i]);
+                encrypted += abc[tmp];
+            }
+            return encrypted;
+        }
+
+        public int CharToNumber(char lettre)
+        {
+            return abc.IndexOf(lettre);
+        }
     }
 }
