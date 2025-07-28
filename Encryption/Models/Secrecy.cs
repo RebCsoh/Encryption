@@ -1,6 +1,6 @@
-﻿namespace Encryption
+﻿namespace Encryption.Models
 {
-    public class Secrery
+    public class Secrecy
     {
         // kulcs generálás
         string abc = "abcdefghijklmnopqrstuvwxyz ";
@@ -8,12 +8,13 @@
         {
             string GeneratedKey = string.Empty;
             Random random = new Random();
-            int lenght = random.Next(lowerbound,100);
+            int lenght = random.Next(lowerbound, 101);
 
             for (int i = 0; i < lenght; i++)
             {
-                int number = random.Next(0,27);
-                int lettre = abc[number];
+                int number = random.Next(0, 27);
+                char lettre = abc[number];
+
                 GeneratedKey += lettre;
             }
             return GeneratedKey;
@@ -25,12 +26,12 @@
             string encrypted = string.Empty;
             int tmp = 0;
 
-            for (int i = 0; i < message.Length;i++)
+            for (int i = 0; i < message.Length; i++)
             {
                 tmp = CharToNumber(message[i]) + CharToNumber(key[i]);
                 if (tmp > 26)
                 {
-                    tmp = tmp % 27; 
+                    tmp = tmp % 27;
                 }
                 encrypted += abc[tmp];
             }
@@ -48,7 +49,7 @@
             string message = string.Empty;
             int tmp = 0;
 
-            for (int i = 0;i < encrypted.Length;i++)
+            for (int i = 0; i < encrypted.Length; i++)
             {
                 tmp = CharToNumber(encrypted[i]) - CharToNumber(key[i]);
                 if (tmp < 0)
