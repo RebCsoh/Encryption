@@ -10,6 +10,7 @@ namespace Encryption
         {
             Secrecy secrecy = new Secrecy();
             Overlap overlap = new Overlap();
+            string[] words = ReadFile("words.txt");
 
             try
             {
@@ -32,6 +33,34 @@ namespace Encryption
             {
                 Console.WriteLine(ex.Message);
             }
+
+            Console.Write("Első titkosított üzenet: ");
+            string encrypted1 = Console.ReadLine();
+
+            Console.Write("Második titkosított üzenet: ");
+            string encrypted2 = Console.ReadLine();
+
+            secrecy.ValidFormat(encrypted1);
+            secrecy.ValidFormat(encrypted2);
+
+            string[] keys = overlap.FindKey(encrypted1, encrypted2, words);
+
+            if (keys.Length == 0)
+                Console.WriteLine("Nincs érvényes kulcs.");
+            else
+            {
+                Console.WriteLine("Lehetséges kulcsok:");
+                foreach (string key in keys)
+                {
+                    string message = secrecy.Decoding(key, encrypted2);
+                    Console.WriteLine($"Kulcs: {key}, Üzenet: {message}");
+                }
+            }
+        }
+
+        static string[] ReadFile(string path)
+        {
+            return File.ReadAllLines(path);
         }
     }
 }
