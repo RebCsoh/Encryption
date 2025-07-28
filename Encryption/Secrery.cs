@@ -37,5 +37,23 @@
         {
             return abc.IndexOf(lettre);
         }
+
+        //dekodolás
+        public string Decoding(string key, string encrypted)
+        {
+            string message = string.Empty;
+            int tmp = 0;
+
+            for (int i = 0;i < encrypted.Length;i++)
+            {
+                tmp = CharToNumber(encrypted[i]) - CharToNumber(key[i]);
+                if (tmp < 0)
+                {
+                    tmp += 27;
+                }
+                message += abc[tmp];
+            }
+            return message;
+        }
     }
 }
