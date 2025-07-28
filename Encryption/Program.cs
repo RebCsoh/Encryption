@@ -18,7 +18,6 @@ namespace Encryption
 
             Secrecy secrecy = new Secrecy();
             Overlap overlap = new Overlap();
-            string[] words = ReadFile("words.txt");
 
             try
             {
@@ -51,7 +50,7 @@ namespace Encryption
                         secrecy.ValidFormat(encrypted1);
                         secrecy.ValidFormat(encrypted2);
 
-                        string[] keys = overlap.FindKey(encrypted1, encrypted2, words);
+                        string[] keys = overlap.FindKey(encrypted1, encrypted2);
 
                         if (keys.Length == 0)
                             Console.WriteLine("Nincs érvényes kulcs.");
@@ -71,11 +70,6 @@ namespace Encryption
             {
                 Console.WriteLine(ex.Message);
             }   
-        }
-
-        static string[] ReadFile(string path)
-        {
-            return File.ReadAllLines(path);
         }
     }
 }
