@@ -1,4 +1,6 @@
-﻿namespace Encryption.Models
+﻿using Encryption.Exceptions;
+
+namespace Encryption.Models
 {
     public class Secrecy
     {
@@ -59,6 +61,16 @@
                 message += abc[tmp];
             }
             return message;
+        }
+
+        //formátum vizsgálat
+        public void ValidFormat(string message)
+        {
+            foreach(char lettre in message)
+            {
+                if (!abc.Contains(lettre))
+                    throw new InvalidFormatException("Nem megfelelő formátum.");
+            }
         }
     }
 }

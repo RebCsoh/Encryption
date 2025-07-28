@@ -1,4 +1,5 @@
-﻿using Encryption.Models;
+﻿using Encryption.Exceptions;
+using Encryption.Models;
 
 namespace Encryption
 {
@@ -6,20 +7,30 @@ namespace Encryption
     {
         static void Main(string[] args)
         {
-            Secrecy secrecy = new Secrecy();
+            try
+            {
+                Secrecy secrecy = new Secrecy();
 
-            Console.Write("Üzenet: ");
-            string message = Console.ReadLine();
-            int length = message.Length;
+                Console.Write("Üzenet: ");
+                string message = Console.ReadLine();
+                int length = message.Length;
 
-            string key = secrecy.keyGenerator(length);
-            Console.WriteLine($"Kulcs: {key}");
+                secrecy.ValidFormat(message);
 
-            string encrypted = secrecy.Encrypting(message, key);
-            Console.WriteLine($"Titkosított üzenet: {encrypted}");
+                string key = secrecy.keyGenerator(length);
+                Console.WriteLine($"Kulcs: {key}");
 
-            string decodedMessage = secrecy.Decoding(key, encrypted);
-            Console.WriteLine($"Eredeti üzenet: {decodedMessage}");
+                string encrypted = secrecy.Encrypting(message, key);
+                Console.WriteLine($"Titkosított üzenet: {encrypted}");
+
+                string decodedMessage = secrecy.Decoding(key, encrypted);
+                Console.WriteLine($"Eredeti üzenet: {decodedMessage}");
+            }
+            catch (InvalidFormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         }
     }
 }
