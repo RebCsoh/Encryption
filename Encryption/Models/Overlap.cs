@@ -26,18 +26,32 @@
 
                         tmpKey += keyCode;
                     }
-                    if(!keys.Contains(tmpKey))
+                    if (!keys.Contains(tmpKey))
                         keys.Add(tmpKey);
                 }
             }
 
             //visszafejtjük a 2. üzenetre, ha értelmes lesz a kulccsal akkor érvényes a kulcs
+            //szavakra kell bontanunk
             for (int i = 0; i < keys.Count; i++)
             {
                 string tmpMessage = Decoding(keys[i], encrypted2);
+                string[] parts = tmpMessage.Split(' ');
+                bool allGood = true;
 
-                if (words.Contains(tmpMessage))
+                foreach (string part in parts)
+                {
+                    if (!words.Contains(part))
+                    {
+                        allGood = false;
+                        break;
+                    }
+                    
+                }
+
+                if (allGood)
                     finalKeys.Add(keys[i]);
+
             }
             return finalKeys.ToArray();
         }
