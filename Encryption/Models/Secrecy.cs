@@ -51,6 +51,11 @@ namespace Encryption.Models
             string message = string.Empty;
             int tmp = 0;
 
+            while (key.Length < encrypted.Length)
+                key += key;
+
+            key = key.Substring(0, encrypted.Length);
+
             for (int i = 0; i < encrypted.Length; i++)
             {
                 tmp = CharToNumber(encrypted[i]) - CharToNumber(key[i]);
