@@ -4,7 +4,7 @@ namespace Encryption.Models
 {
     public class Secrecy
     {
-        // kulcs generálás
+        // kulcsgenerálás
         string abc = "abcdefghijklmnopqrstuvwxyz ";
         public string keyGenerator(int lowerbound)
         {

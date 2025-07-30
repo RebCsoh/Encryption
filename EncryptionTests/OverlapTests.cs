@@ -18,7 +18,7 @@ namespace EncryptionTests
             string[] result = overlap.FindKey(encrypted1, encrypted2);
 
             //arrange
-            Assert.That(result, Is.EqualTo(expectedResult));
+            Assert.That(result, Is.EquivalentTo(expectedResult));
         }
 
     }

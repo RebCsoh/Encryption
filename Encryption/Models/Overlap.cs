@@ -11,7 +11,7 @@
 
             string[] words = File.ReadAllLines("words.txt");
 
-            //titkosított üzenet <= üzenet, keressük ezeket a szvakat a listában
+            //titkosított üzenet <= üzenet, keressük ezeket a szavakat a listában
             for (int i = 0; i < words.Length; i++)
             {
                 if (words[i].Length >= encrypted1.Length)
@@ -37,7 +37,7 @@
             //szavakra kell bontanunk
             for (int i = 0; i < keys.Count; i++)
             {
-                //nem lehet a msásodik üzenet hosszabb, mert indexelési hiba lesz
+                //nem lehet a második üzenet hosszabb
                 string extendedKey = keys[i];
 
                 while (extendedKey.Length < encrypted2.Length)

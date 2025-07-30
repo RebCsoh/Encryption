@@ -13,7 +13,12 @@ namespace Encryption
                 "2. Kulcsok megtalálása. \n" +
                 "Kérem válasszon a fenti opciók közül (1 vagy 2)");
 
-            int choice = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int choice) || (choice != 1 && choice != 2))
+            {
+                Console.WriteLine("Érvénytelen választás.");
+                return;
+            }
+
             Console.Clear();
 
             Secrecy secrecy = new Secrecy();
