@@ -56,11 +56,11 @@ namespace Encryption
                             Console.WriteLine("Nincs érvényes kulcs.");
                         else
                         {
-                            Console.WriteLine("Lehetséges kulcsok:");
+                            Console.WriteLine("Lehetséges opciók:");
                             foreach (string k in keys)
                             {
                                 string msg = secrecy.Decoding(k, encrypted2);
-                                Console.WriteLine($"Kulcs: {k}, Üzenet: {msg}");
+                                Console.WriteLine($"kulcs: {k}, első üzenet: {secrecy.Decoding(k,encrypted1)}, második üzenet: {secrecy.Decoding(k,encrypted2)}");
                             }
                         }
                         break;
