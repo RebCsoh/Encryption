@@ -19,20 +19,6 @@ namespace Encryption.Models
             return key;
         }
 
-        private bool WordsInList(string message, string[] words)
-        {
-            string[] parts = message.Split(' ');
-            foreach (string part in parts)
-            {
-                if ( string.IsNullOrEmpty(part))
-                    continue;
-
-                if (!words.Contains(part))
-                    return false;
-            }
-            return true;
-        }
-
         //megnézi a második szöveget és közös kulcsot keres
         public string[] FindKey(string encrypted1, string encrypted2)
         {
@@ -86,23 +72,6 @@ namespace Encryption.Models
 
             }
             return finalKeys.ToArray();
-        }
-
-        public string[] ValidKeys(string[] finalKeys, string encrypted1, string encrypted2)
-        {
-            List<string> result = new List<string>();
-            string[] words = File.ReadAllLines("words.txt");
-
-            foreach (string key in finalKeys)
-            {
-                string decodedKey1 = Decoding(key, encrypted1);
-                string decodedKey2 = Decoding(key, encrypted2);
-
-                if(WordsInList(decodedKey1,words) && WordsInList(decodedKey2,words))
-                    result.Add(key);
-            }
-
-            return result.ToArray();
         }
     }
 }
