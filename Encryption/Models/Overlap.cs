@@ -5,7 +5,7 @@
         string abc = "abcdefghijklmnopqrstuvwxyz ";
 
         //kiszámolja a kulcsot az első mondatra
-        public string getKey(string encrypted, string message)
+        public string GetKey(string encrypted, string message)
         {
             string key = string.Empty;
             for (int i = 0; i < encrypted.Length; i++)
@@ -30,7 +30,10 @@
                     continue;
 
                 //első üzenet elejére lesz illesztve
-                string keyparts = getKey(encrypted1.Substring(0, word.Length), word);
+                string keyparts = GetKey(encrypted1.Substring(0, word.Length), word);
+
+                //szavak ellenőrzése (1)
+                string decoded1 = Decoding(keyparts, encrypted1.Substring(0, word.Length));
 
                 //bővitjük ha rövid első üzenet
                 string fullkey1 = keyparts;
@@ -47,11 +50,12 @@
 
                 string decoded2 = Decoding(fullkey2, encrypted2);
 
-                //szavak ellenőrzése
-                string[] parts = decoded2.Split(' ');
+                //szavak ellenőrzése (2)
+                string[] parts2 = decoded2.Split(' ');
+                string[] parts1 = decoded1.Split(' ');
                 bool allGood = true;
 
-                foreach (string part in parts)
+                foreach (string part in parts1.Concat(parts2))
                 {
                     if (!words.Contains(part))
                     {

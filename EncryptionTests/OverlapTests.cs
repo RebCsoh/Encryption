@@ -6,8 +6,7 @@ namespace EncryptionTests
     [TestFixture]
     public class OverlapTests
     {
-        [TestCase("alma","beka",new[] { "klux"})]
-        [TestCase("elm", "mey",new[] { "arm", "uyu", "jlu"})]
+        [TestCase("curiosity killed the cat", "early bird catches the worm", new[] { "aaaaaaaaaaaaaaaaaaaaaaaa" })]
 
         public void FindKeyTest(string encrypted1, string encrypted2, string[] expectedResult)
         {
