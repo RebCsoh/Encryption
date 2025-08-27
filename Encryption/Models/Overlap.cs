@@ -4,50 +4,51 @@
     {
         string abc = "abcdefghijklmnopqrstuvwxyz ";
 
+        //kiszámolja a kulcsot az első mondatra
+        public string getKey(string encrypted, string message)
+        {
+            string key = string.Empty;
+            for (int i = 0; i < encrypted.Length; i++)
+            {
+                int encryptedCode = CharToNumber(encrypted[i]);
+                int messageCode = CharToNumber(message[i]);
+                key += abc[(encryptedCode - messageCode + 27) % 27];
+            }
+            return key;
+        }
+
+        //megnézi a második szöveget és közös kulcsot keres
         public string[] FindKey(string encrypted1, string encrypted2)
         {
-            List<string> keys = new List<string>();
             List<string> finalKeys = new List<string>();
 
             string[] words = File.ReadAllLines("words.txt");
 
-            //titkosított üzenet <= üzenet, keressük ezeket a szavakat a listában
-            for (int i = 0; i < words.Length; i++)
+            foreach (string word in words)
             {
-                if (words[i].Length >= encrypted1.Length)
-                {
-                    string tmpKey = string.Empty;
+                if (word.Length > encrypted1.Length)
+                    continue;
 
-                    //karakterenként visszafejtjük, hogy mi lehetett a kulcs
-                    //kulcs = titkosítottkód - üzenetkód + átalakítás
-                    for (int j = 0; j < encrypted1.Length; j++)
-                    {
-                        int messageCode = CharToNumber(words[i][j]);
-                        int encryptedCode = CharToNumber(encrypted1[j]);
-                        char keyCode = abc[(encryptedCode - messageCode + 27) % 27];
+                //első üzenet elejére lesz illesztve
+                string keyparts = getKey(encrypted1.Substring(0, word.Length), word);
 
-                        tmpKey += keyCode;
-                    }
-                    if (!keys.Contains(tmpKey))
-                        keys.Add(tmpKey);
-                }
-            }
-
-            //visszafejtjük a 2. üzenetre, ha értelmes lesz a szó akkor érvényes a kulcs
-            //szavakra kell bontanunk
-            for (int i = 0; i < keys.Count; i++)
-            {
-                //nem lehet a második üzenet hosszabb
-                string extendedKey = keys[i];
-
-                while (extendedKey.Length < encrypted2.Length)
-                    extendedKey += extendedKey;
-
-                extendedKey = extendedKey.Substring(0, encrypted2.Length);
+                //bővitjük ha rövid első üzenet
+                string fullkey1 = keyparts;
+                while (fullkey1.Length < encrypted1.Length)
+                    fullkey1 += fullkey1;
+                fullkey1 = fullkey1.Substring(0, encrypted1.Length);
 
 
-                string tmpMessage = Decoding(extendedKey, encrypted2);
-                string[] parts = tmpMessage.Split(' ');
+                //bővités második üzenet
+                string fullkey2 = fullkey1;
+                while (fullkey2.Length < encrypted2.Length)
+                    fullkey2 += fullkey2;
+                fullkey2 = fullkey2.Substring(0, encrypted2.Length);
+
+                string decoded2 = Decoding(fullkey2, encrypted2);
+
+                //szavak ellenőrzése
+                string[] parts = decoded2.Split(' ');
                 bool allGood = true;
 
                 foreach (string part in parts)
@@ -60,8 +61,8 @@
 
                 }
 
-                if (allGood)
-                    finalKeys.Add(keys[i]);
+                if (allGood && !finalKeys.Contains(fullkey1))
+                    finalKeys.Add(fullkey1);
 
             }
             return finalKeys.ToArray();
